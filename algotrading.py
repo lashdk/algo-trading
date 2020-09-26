@@ -24,45 +24,45 @@ class Stock_Lot_Long(object):
         date= The date at which the stock was bought
         stop_loss=The stop loss price of the stock_lot(Float)
         target=the target price of the stock_lot(Float)
-    
-    
+
+
 
     class variable "tag" is used to assign unique idenifiers to stock_lot. (Helps to differentiate stock_lots)
-    
-   
-    
-    
+
+
+
+
     Functions:
         __init__ : Intialises all the variables. Also updates "tag" by 1.
-            self.stock= Used to store stock 
+            self.stock= Used to store stock
             self.date=Used to store date
             self.buy_price=Used to store buy_price
             self.stop_loss=Used to store stop_loss.If stop_loss not given assigns a default value.
             self.target=Used to store target.If target not given assigns a default value.
-        
+
         get_stock_name() : Returns self.stock
-        
+
         get_stock_quantity() : Returns self.quantity
-        
+
         get_stock_buy_price(): Returns self.buy_price
-        
+
         get_stock_stop_loss(): Returns self.stop_loss
-        
+
         get_stock_target(): Returns self.target
-        
+
         get_stock_face_value(): Returns the amount spent to buy the respective stock_lot
-        
+
         get_stock_tag(): Returns identifier "tag"
-        
+
         get_stock_date(): Returns self.date
-        
+
         set_stock_stop_loss(stop_loss): Sets self.stop_loss to a particular value(Float)
-        
+
         set_stock_target(target) : Sets self.target to a particular value(Float)
-        
-        
-        __str__() : Prints basic information about the stock lot. Eg quantity,date,buy_price 
-            
+
+
+        __str__() : Prints basic information about the stock lot. Eg quantity,date,buy_price
+
     """
     tag = 1
 
@@ -130,47 +130,47 @@ class Stock_Lot_Short(object):
         date= The date at which the stock was sold
         stop_loss=The stop loss price of the stock_lot(Float)
         target=the target price of the stock_lot(Float)
-    
-    
+
+
 
     class variable "tag" is used to assign unique identifiers to stock_lot. (Helps to differentiate stock_lots)
-    
-   
-    
-    
+
+
+
+
     Functions:
         __init__ : Intialises all the variables. Also updates "tag" by 1.
-            self.stock= Used to store stock 
+            self.stock= Used to store stock
             self.date=Used to store date
             self.sell_price=Used to store sell_price
             self.stop_loss=Used to store stop_loss.If stop_loss not given assigns a default value.
             self.target=Used to store target.If target not given assigns a default value.
-        
+
         get_stock_name() : Returns self.stock
-        
+
         get_stock_quantity() : Returns self.quantity
-        
+
         get_stock_sell_price(): Returns self.sell_price
-        
+
         get_stock_stop_loss(): Returns self.stop_loss
-        
+
         get_stock_target(): Returns self.target
-        
+
         get_stock_face_value(): Returns the amount gained after selling the respective stock_lot
-        
+
         get_stock_tag(): Returns identifier "tag"
-        
+
         get_stock_date(): Returns self.date
-        
+
         set_stock_stop_loss(stop_loss): Sets self.stop_loss to a particular value(Float)
-        
+
         set_stock_target(target) : Sets self.target to a particular value(Float)
-        
-        
-        __str__() : Print basic information about the stock lot. Eg quantity,date,sell_price 
-    
-    
-    
+
+
+        __str__() : Print basic information about the stock lot. Eg quantity,date,sell_price
+
+
+
     """
 
     tag = 1
@@ -231,30 +231,30 @@ class Stock_Lot_Short(object):
 
 class Stock_Lot_EMA(Stock_Lot_Long):
     """
-    
+
 
     Parameters
     ----------
     Parent class : Stock_Lot_Long
     Inherits all the functions of the parent class. eg get_stock_buy_price(), get_stock_quantity() etc
-    
-    
-    
+
+
+
     Stock_Lot_Long : TYPE
-    
+
     Additonal input parameters:
-            
+
         ema = A TUPLE OF "2" DAYS(INT) to indicate entry and exit position.Eg ema=(50,100)
             DESCRIPTION. EMA STOCK LOT LONG OBJECT. WILL ONLY EXIT IF value ema[1]<ema[2]
-    
+
     Additonal variables:
         self.ema_shorter : Used to store ema[1] (Int)
         self.ema_longer : Ued to store ema[2] (Int)
-    
+
     Additonal functions:
         get_stock_ema(): Returns self.ema_shorter,self.ema_longer . Eg  Returns (50,100)
 
-    
+
 
     """
 
@@ -275,18 +275,18 @@ class Stock_Lot_EMA(Stock_Lot_Long):
 # period="6mo"
 def Create_Data(stocks, period):
     """
-    
+
     A function used to create stock data in the format ".xlsx"
     Input parameters:
         stocks= A list of stock names(tickers)[Strings] for which you want the stock data. Eg.["MSFT","TSLA","IDEA.NS"]
         period= The time period for which you want the stock data for. Eg. 1 year,5 year, 1 week= "1y","5y","1w" (String)
-        
-        
+
+
     The ".xlsx" file contain the stock data with the columns :"Date","Open","High","Close","Low","Volume"
     The file is stored in the programme directory.
-    
-    
-    
+
+
+
     """
     for stock in stocks:
         name = str(stock)
@@ -299,29 +299,29 @@ def Create_Data(stocks, period):
 
 def Load_Data(stocks):
     """ Input a list of string of stocks,  Output a Dictionary of DataFrame objects of different stocks.
-    
+
     The function searches for the stock_name.xlsx file in the programme directory to load the data.
-    
+
     The function also calculates different indicator which are to be used during analysis.
     Eg. Exponential Moving averages for 9,21,25,50,100,200 days(EMA50,EMA100,EMA25)
         Moving Averages Convergence Divergence (MACD,EMA_MACD)
         Simple Moving Averages (SMA)
         Bollinger Bands(BOl_UP,BOL_LOW)
         Average Volume(AVG_VOLUME)
-    
+
     All the indicators are stored in the stock_DataFrame.
-    
-    
+
+
     Input parameters:
         stocks=A list of stock names(tickers)[Strings] for which you want the stock data. Eg.["MSFT","TSLA","IDEA.NS"]
-    
-    
+
+
     Returns : An Dictionary of type DataFrame objects of different stocks with key as the stock_name.Eg {"MSFT":dataframe,"TSLA":dataframe}
-    
-    
-    
-    
-    
+
+
+
+
+
     """
 
     stocks_data_frame = {}
@@ -356,12 +356,12 @@ def Load_Data(stocks):
 
 def Slice_Dataframe(dataframe, date):
     """
-    
+
 
     Parameters
     ----------
     dataframe : TYPE DataFrame
-        
+
     date : TYPE : Index(int)
         DESCRIPTION. Index of the date you want to the slice the data to.
 
@@ -395,80 +395,80 @@ def Slice_Dataframe(dataframe, date):
 class Portfolio(object):
     '''
     An object of type Portfolio which keeps track of objects "Stock_Lot_Long" , "Stock_Lot_Short","Stock_Lot_EMA" trades and current cash.
-    
+
     Input parameters:
         long_cash= The amount of cash to be invested in long trades (Float)
         short_cash= The amount of cash kept as reserve against the short trades(Float)
         stock_lot_dict= Dict with keys "Long","Short","EMA" to store objects "Stock_Lot_Long","Stock_Lot_Short","Stock_Lot_EMA" trades in the appropiate key value (Dictionary)
-        
+
     Functions:
         __init__(): Intialises all the neccessary variables for object "Portfolio":
             self.long_cash= Used to store long_cash(Float)
             self.short_cash=Used to store short_cash(Float)
             self.stock_lot_dict=Used to store stock_lot_dict(Dictionary)
-        
+
         get_long_cash(): Returns self.long_cash
-        
-        
+
+
         get_short_cash(): Returns self.short_cash
-        
-        
+
+
         get_stock_lot_dict(): Returns self.stock_lot_dict
-        
-        
+
+
         add_stock_lot_long(Stock_Lot_Long): Adds new Object "Stock_Lot_Long" to "Long" key of self.stock_lot_dict
-        
-        
+
+
         remove_stock_lot_long(Stock_Lot_Long): Removes existing Object "Stock_Lot_Long" from "Long" key of self.stock_lot_dict
-        
-        
-        
+
+
+
         add_stock_lot_short(Stock_Lot_Short): Adds new Object "Stock_Lot_Short" to "Short" key of self.stock_lot_dict
-        
-        
-        
+
+
+
         remove_stock_lot_short(Stock_Lot_Short): Removes existing Object "Stock_Lot_Short" from "Short" key of self.stock_lot_dict
-        
-        
-        
+
+
+
         add_stock_lot_short(Stock_Lot_EMA): Adds new Object "Stock_Lot_EMA" to "EMA" key of self.stock_lot_dict
-        
-        
+
+
         remove_stock_lot_short(Stock_Lot_EMA): Removes existing Object "Stock_Lot_EMA" from "EMA" key of self.stock_lot_dict
-        
-        
+
+
         add_long_cash(cash): Adds cash(Float) to self.long_cash
-        
-        
+
+
         remove_long_cash(cash): Removes cash(Float) from self.long_cash
-        
-        
+
+
         add_short_cash(cash): Adds cash(Float) from self.short_cash
-        
-        
+
+
         remove_short_cash(cash): Removes cash(Float) from self.short_cash
-        
-        
+
+
         get_long_worth(stocks_data_frame,date): Gets worth of stock_lot from "Long" and "EMA" key of self.stock_lot_dict
-                                                Gets prices of current stock from stocks_data_frame on a particular date 
+                                                Gets prices of current stock from stocks_data_frame on a particular date
                                                 and then calculates total worth
-        
-                                        
+
+
         get_short_worth(stocks_data_frame,date): Gets worth of stock_lot from "Short" key of self.stock_lot_dict
-                                                Gets prices of current stock from stocks_data_frame on a particular date 
+                                                Gets prices of current stock from stocks_data_frame on a particular date
                                                 and then calculates total worth.
-                                                
+
         print_portfolio(): prints all the stock_lot objects in self.stock_lot_dict, self.long_cash and self.short_cash
-        
-        
-        
-                                                
-    
-         
-        
-    
-        
-    
+
+
+
+
+
+
+
+
+
+
     '''
     def __init__(self, long_cash, short_cash, stock_lot_dict):
         self.long_cash = float(long_cash)
@@ -517,7 +517,7 @@ class Portfolio(object):
 
     def get_long_worth(self, stocks_data_frame, date):
         """
-        
+
 
         Parameters
         ----------
@@ -571,11 +571,11 @@ class Portfolio(object):
 class Technical_analysis(object):
     '''
     An object of type Technical_analysis used to conduct technical analysis on stock_data_frame
-    
+
     Input parameters:
         sliced_data= object of type DataFrame containing the data of the stock on which technical analysis is gonna be conducted.
-    
-    
+
+
     Functions:
         __init__(): Intialises neccassary object variables to be used by object later:
             self.data= Used to store copy of "sliced_data"
@@ -598,62 +598,62 @@ class Technical_analysis(object):
             self.sma20index=Stores index of "SMA20"
             self.bol_upindex=Stores index of "BOL_UP"
             self.bol_lowindex=Stores index of "BOL_LOW"
-        
+
         bullish_marubozu(): Checks for bullish marubozu candlestick pattern.
-        
+
         bearish_marubozu(): Checks for bearish marubozu candlestick pattern.
-        
+
         spining_top(): Checks for spinning top candlestick pattern
-        
+
         doji(): Checks for doji candlestick pattern
-        
+
         downtrend(): Checks if the market is in a downward trend.
-        
+
         uptrend(): Checks if the market is in an upward trend.
-        
+
         bullish_hammer() : Checks for bullish hammer candlestick pattern
-        
+
         bearish_hanging_man(): Checks for bearish hanging man candlestick pattern
-        
+
         bearish_shooting_star(): Checks for bearish shooting star candlestick pattern
-        
+
         bullish_inverted_hammer(): Checks for bullish inverted hammer candlestick pattern
-        
+
         bullish_engulfing(): Checks for bullish engulfing candlestick pattern
-        
+
         bearish_engulfing(): Checks for bearish engulfing candlestick pattern
-        
+
         bullish_piercing_pattern(): Checks for bullish piercing candlestick pattern
-        
+
         bearish_dark_cloud_cover(): Checks for bearish dark cloud cover candlestick pattern
-        
+
         bearish_harami() : Checks for bearish harami candlestick pattern
-        
+
         bullish_harami() : Checks for bullish harami candlestick pattern
-        
+
         bullish_morning_star(): Checks for bullish morning star candlestick pattern
-        
+
         bearish_evening_star(): Checks for bearish evening star candlestick pattern
-        
+
         volume(): Checks if the volume traded on that day is greater or smaller than Last 10 days average volume
-        
+
         bullish_ema_50_100(): Checks if EMA 50 is greater than EMA 100
-        
+
         bullish_ema_100_200(): Checks if EMA 100 is greater than EMA 200
-        
+
         bullish_ema_25_50(): Checks if EMA 25 is greater than EMA 200
-        
+
         bullish_ema_9_21(): Checks if EMA 9 is greater than EMA 21
-        
+
         bullish_macd(): Checks if MACD is greater than EMA_MACD
-        
+
         bearish_macd(): Checks if MACD is less than EMA_MACD
-        
+
         bullish_bollinger(): Checks if price is less than BOL_LOW
-        
+
         bearish_bollinger(): Checks if price is greater than BOL_UP
-    
-    
+
+
     '''
     def __init__(self, sliced_data):
         self.data = copy.deepcopy(sliced_data)
@@ -1430,9 +1430,9 @@ class Backtest(object):
         self.total_invested=self.portfolio.get_long_cash()
 
         self.msft = self.stocks_data_frame["TCS.NS"]
-      
-            
-        
+
+
+
         columns = list(self.msft.columns)
         self.columnsindex = {}
         self.columnsindex["Close"] = columns.index("Close")
@@ -1449,7 +1449,7 @@ class Backtest(object):
         self.end_date_index = list(self.msft.index).index(end_date_timestamp)
         for a in self.msft.index:
             self.date.append(str(a.date()))
-        
+
         # print(self.date)
 
     def check_current_stock(self, date):
@@ -1619,7 +1619,7 @@ class Backtest(object):
 
     def run(self):
         i=1
-        
+
         for date in range(self.start_date_index, self.end_date_index):
             if i%30==0:
                 self.portfolio.add_long_cash(5000)
@@ -1629,7 +1629,7 @@ class Backtest(object):
             self.long_short_stock(date)
             self.worth.append(self.get_worth(str(self.date[date]))+ self.portfolio.get_long_cash())
             i +=1
-        
+
 
     def get_worth(self, date):
         return self.portfolio.get_long_worth(self.stocks_data_frame, date)
@@ -1640,18 +1640,18 @@ class Backtest(object):
             print("-----------------------" + str(stock_lot) + "--------------------")
             for stock in stock_dict[stock_lot]:
                 print(stock)
-    
-    
+
+
     def plot_worth(self):
         plt.style.use('ggplot')
         plt.figure()
-    
+
         plt.plot(self.date[self.start_date_index:self.end_date_index],self.worth,label="Net Portfolio Worth")
         plt.xlabel("Date")
         plt.ylabel("Indian Rupees")
         plt.legend(loc="best")
-        
-    
+
+
     def summary(self):
         print("From Date :"+str(self.date[self.start_date_index])+"  To Date :"+str(self.date[self.end_date_index]))
         print("Base Investment "+str(self.intial_invest))
@@ -1662,10 +1662,10 @@ class Backtest(object):
         profit_per=(profit/self.total_invested)*100
         print("Profit "+str(round(profit)))
         print("Profit Percentage "+str(round(profit_per,2))+"%")
-        
-        
-        
-        
+
+
+
+
 
 
 
@@ -1675,7 +1675,7 @@ class Backtest(object):
 
 
 def intialize_variables(stocks,period,long_cash,short_cash):
-    
+
     # Create_Data(stocks, period)
     stocks_data_frame = Load_Data(stocks)
     weights = {"bullish_marubozu": 0, "bullish_hammer": 0.4, "bullish_inverted_hammer": 0.4, "bullish_engulfing": 0.4,
@@ -1691,33 +1691,32 @@ def intialize_variables(stocks,period,long_cash,short_cash):
     weights["bearish_harami"] = 0.4
     weights["bearish_evening_star"] = 0.4
     intial_stocks = {}
-    
+
     intial_stocks["Long"] = []
     intial_stocks["EMA"] = []
     intial_stocks["Short"] = []
     port=Portfolio(long_cash, short_cash, intial_stocks)
-    
-    
-    
-    
+
+
+
+
     return port,stocks_data_frame,weights
-    
-    
-    
 
 
-##############################################################################################################    
-    
-    
+
+
+
+##############################################################################################################
+
+
 stocks = ["RELIANCE.NS", "TCS.NS", "HDFCBANK.NS", "HINDUNILVR.NS", "BHARTIARTL.NS", "INFY.NS"]
 period = "5y"
 long_cash=200000
 short_cash=100000
-
+# Create_Data(stocks, period)
 port,stocks_data_frame,weights=intialize_variables(stocks, period, long_cash, short_cash)
 
 backtest = Backtest(port, stocks_data_frame, weights, "20160115", "20180119")
 backtest.run()
 backtest.plot_worth()
 backtest.summary()
-

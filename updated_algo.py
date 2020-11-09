@@ -1828,3 +1828,4 @@ d=port.get_short_worth(stocks_data_frame, "20200805")
 e=port.get_short_cash()
 print(d)
 print(e)
+#checking editing

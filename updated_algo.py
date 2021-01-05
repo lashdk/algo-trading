@@ -707,10 +707,10 @@ class Technical_analysis(object):
         stop_loss = None
         pattern = False
         index = self.index[-1]
-        high = self.data.at[index, "High"]
-        open = self.data.at[index, "Open"]
-        close = self.data.at[index, "Close"]
-        low = self.data.at[index, "Low"]
+        high = self.data.iat[-1, self.highindex]
+        open = self.data.iat[-1, self.openindex]
+        close = self.data.iat[-1, self.closeindex]
+        low = self.data.iat[-1, self.lowindex]
         if close <= open:
 
             if abs(open - high) <= (open * 0.01) and abs(close - low) <= (close * 0.01):
@@ -724,11 +724,11 @@ class Technical_analysis(object):
         buy_price = None
         stop_loss = None
         pattern = False
-        index = self.index[-1]
-        high = self.data.at[index, "High"]
-        open = self.data.at[index, "Open"]
-        close = self.data.at[index, "Close"]
-        low = self.data.at[index, "Low"]
+        high = self.data.iat[-1, self.highindex]
+        open = self.data.iat[-1, self.openindex]
+        close = self.data.iat[-1, self.closeindex]
+        low = self.data.iat[-1, self.lowindex]
+       
 
         if open >= close:
             uppershadow = abs(high - open)
@@ -785,10 +785,10 @@ class Technical_analysis(object):
         stop_loss = None
         pattern = False
         index = self.index[-1]
-        high = self.data.at[index, "High"]
-        open = self.data.at[index, "Open"]
-        close = self.data.at[index, "Close"]
-        low = self.data.at[index, "Low"]
+        high = self.data.iat[-1, self.highindex]
+        open = self.data.iat[-1, self.openindex]
+        close = self.data.iat[-1, self.closeindex]
+        low = self.data.iat[-1, self.lowindex]
         body = None
         lowershadow = None
 
@@ -818,10 +818,11 @@ class Technical_analysis(object):
         stop_loss = None
         pattern = False
         index = self.index[-1]
-        high = self.data.at[index, "High"]
-        open = self.data.at[index, "Open"]
-        close = self.data.at[index, "Close"]
-        low = self.data.at[index, "Low"]
+        high = self.data.iat[-1, self.highindex]
+        open = self.data.iat[-1, self.openindex]
+        close = self.data.iat[-1, self.closeindex]
+        low = self.data.iat[-1, self.lowindex]
+       
         body = None
         lowershadow = None
 
@@ -852,10 +853,11 @@ class Technical_analysis(object):
         sell_price = None
         stop_loss = None
         index = self.index[-1]
-        high = self.data.at[index, "High"]
-        open = self.data.at[index, "Open"]
-        close = self.data.at[index, "Close"]
-        low = self.data.at[index, "Low"]
+        high = self.data.iat[-1, self.highindex]
+        open = self.data.iat[-1, self.openindex]
+        close = self.data.iat[-1, self.closeindex]
+        low = self.data.iat[-1, self.lowindex]
+       
         body = None
         uppershadow = None
 
@@ -883,10 +885,11 @@ class Technical_analysis(object):
         buy_price = None
         stop_loss = None
         index = self.index[-1]
-        high = self.data.at[index, "High"]
-        open = self.data.at[index, "Open"]
-        close = self.data.at[index, "Close"]
-        low = self.data.at[index, "Low"]
+        high = self.data.iat[-1, self.highindex]
+        open = self.data.iat[-1, self.openindex]
+        close = self.data.iat[-1, self.closeindex]
+        low = self.data.iat[-1, self.lowindex]
+       
         body = None
         uppershadow = None
 
@@ -1780,7 +1783,7 @@ def intialize_variables(stocks,period,long_cash,short_cash):
 
     # Create_Data(stocks, period)
     stocks_data_frame = Load_Data(stocks)
-    weights = {"bullish_marubozu": 0, "bullish_hammer": 0.4, "bullish_inverted_hammer": 0.4, "bullish_engulfing": 0.4,
+    weights = {"bullish_marubozu": 0.1, "bullish_hammer": 0.4, "bullish_inverted_hammer": 0.4, "bullish_engulfing": 0.4,
                "bullish_piercing_pattern": 0.4}
     weights["bullish_harami"] = 0.4
     weights["bullish_morning_star"] = 0.4
@@ -1818,13 +1821,13 @@ short_cash=100000
 Create_Data(stocks, period)
 port,stocks_data_frame,weights=intialize_variables(stocks, period, long_cash, short_cash)
 
-backtest = Backtest(port, stocks_data_frame, weights, "20200117", "20200805")
+backtest = Backtest(port, stocks_data_frame, weights, "20120102", "20171215")
 backtest.run()
 backtest.plot_worth()
 backtest.summary()
 # backtest.get_current_stocks()
 # port.print_portfolio()
-d=port.get_short_worth(stocks_data_frame, "20200805")
+d=port.get_short_worth(stocks_data_frame, "20201215")
 e=port.get_short_cash()
 print(d)
 print(e)
